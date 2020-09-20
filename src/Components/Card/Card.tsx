@@ -1,10 +1,12 @@
 import React from "react";
+import { Answer } from '../../App'; 
+import { Wrapper, ButtonWrapper } from "./Card.styles";
 
 export interface CardProps {
   question: string;
   answers: string[];
-  check: any;
-  userAnswer: any;
+  check: (e: React.MouseEvent<HTMLButtonElement>)=> void;
+  userAnswer: Answer | undefined;
   questionNumber: number;
   totalQuestions: number;
 }
@@ -18,21 +20,21 @@ const Card: React.FC<CardProps> = ({
   totalQuestions,
 }) => {
   return (
-    <>
+    <Wrapper>
       <p className="number">
         {questionNumber}| {totalQuestions}
       </p>
       <p dangerouslySetInnerHTML={{ __html: question }} />
       <div className="">
         {answers.map((answer, i) => (
-          <div key={`${answer} ${i}`}>
-            <button disabled={userAnswer} value={answer} onClick={check}>
+          <ButtonWrapper>
+            <button disabled={!!userAnswer} value={answer} onClick={check}>
               <span dangerouslySetInnerHTML={{ __html: answer}} />
             </button>
-          </div>
+          </ButtonWrapper>
         ))}
       </div>
-    </>
+    </Wrapper>
   );
 };
 
